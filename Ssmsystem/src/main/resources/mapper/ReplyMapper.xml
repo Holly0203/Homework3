@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.ReplyMapper">
+    <resultMap id="getReplyMapper" type="com.example.demo.Model.Reply">
+        <id column="id" property="id"/>
+        <result column="message_id" property="messageid"/>
+        <result column="reply_id" property="replyid"/>
+        <result column="reply_detail" property="replydetail"/>
+        <result column="reply_date" property="replydate"/>
+
+    </resultMap>
+
+    <!--成功注册-->
+    <insert id="insertReply" parameterType="com.example.demo.Model.Reply">
+        insert into reply (message_id,reply_id,reply_detail,reply_date ) values(#{messageid},#{replyid},#{replydetail},#{replydate})
+    </insert>
+
+
+<!--根据文章id查询所有评论-->
+    <select id="queryReplyByMessageId" parameterType="int" resultMap="getReplyMapper">
+        select *
+        from reply
+        where message_id = #{messageid}
+    </select>
+    <!--//根据文章id搜索评论-->
+  <select id="findCountById" parameterType="int" resultType="int">
+      select count(message_id) from  reply where message_id = #{messageid}
+  </select>
+    <!--根据文章id查找最近评论-->
+    <select id="findTimeById" parameterType="int" resultType="Date">
+        select max(reply_date) from reply where message_id = #{messageid}
+    </select>
+
+
+</mapper>

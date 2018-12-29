@@ -1,0 +1,48 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>权限管理</title>
+    <link th:href="@{/css/message.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="header">
+    <nav class="navbar navbar-default navbar-static-top"> <img
+            th:src="@{/picture/logo.png}">
+    </nav>
+</div>
+<div class="manage">
+    <li><a th:href="@{/messagecontroller/querymessage/}">退出权限管理</a></li>
+
+
+</div>
+<div class="content">
+    <table  id="mytable" class="table table-striped ">
+        <tr class="label-success">
+            <th style="width: 5%">序号</th>
+            <th style="width: 25%">用户名</th>
+            <th style="width: 15%">当前权限</th>
+            <th style="width: 10%">角色名</th>
+            <th style="width: 10%">更改权限</th>
+
+        </tr>
+        <tr th:each="ul,ulstat:${userlist}">
+            <td th:text="${ul.id}"></td>
+            <td th:text="${ul.phone}"></td>
+           <td th:if="${ul.type==1}">
+               普通会员
+           </td>
+            <td th:if="${ul.type==2}">
+                管理员
+            </td>
+            <td th:text="${ul.name}"></td>
+            <td>
+                <a
+                        th:href="@{/managecontroller/preupdate/(userid=${ul.id})}"
+                        class="btn btn-success btn-sm" role="button">修改权限</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

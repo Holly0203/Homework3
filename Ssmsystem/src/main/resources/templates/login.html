@@ -1,0 +1,67 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/register.css}"/>
+</head>
+<body>
+<div class="header">
+    <div class="picture">
+        <img th:src="@{/picture/logo.png}">
+    </div>
+    <hr>
+    <div class="content">
+        <!-- 左侧图片块 -->
+        <div class="picture">
+            <img th:src="@{/picture/bg1.jpg}">
+
+        </div>
+        <div class="register">
+
+            <form>
+
+                <!-- <div th:text="${test}"></div>-->
+                <label><h3>登录</h3></label><br> <br>
+
+
+                <div class="form-group">
+                    <input type="tel" id="phone" name="phone" placeholder="请输入手机号">
+                </div>
+                <br><br>
+
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="请输入密码">
+                </div>
+                <br>
+
+                <div class="checkbox">
+                    <label> <a href="/usercontroller/toregister">快速注册</a>
+                    </label>
+                </div>
+            </form>
+            <button id="submit">登录</button>
+            <script type="text/javascript" th:src="@{/js/login.js}"></script>
+        </div>
+    </div>
+</div>
+</body>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    $('#submit').on('click', function () {
+        var phone = $('#phone').val();
+        var password = $('#password').val();
+        $.getJSON('../usercontroller/login', {"phone": phone, "password": password}, function (data) {
+            if (data == 1) {
+                console.log(data);
+                location.href = "../messagecontroller/querymessage2"
+            }else if (data==2){
+                console.log(data);
+                location.href="../messagecontroller/querymessage"
+        }
+        })
+    })
+
+</script>
+</html>

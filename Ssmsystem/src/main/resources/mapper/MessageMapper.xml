@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.MessageMapper">
+    <resultMap id="getMessageMapper" type="com.example.demo.Model.Message">
+        <id column="id" property="id"/>
+        <result column="messagetitle" property="messagetitle"/>
+        <result column="messagedetail" property="messagedetail"/>
+        <result column="phone" property="phone"/>
+        <result column="date" property="date"/>
+        <result column=" Commentcount" property=" Commentcount"/>
+        <result column="lastcomment" property="lastcomment" />
+    </resultMap>
+    <!--登录成功查询所有文章-->
+    <!-- 根据登陆用户查询相关消息 -->
+    <select id="queryMessageAll" resultMap="getMessageMapper">
+        select *
+        from mymessage
+        order by lastcomment desc , date
+    </select>
+    <!-- 根据id查看某一条消息 -->
+    <select id="editone" parameterType="Integer" resultMap="getMessageMapper">
+        select * from mymessage where id=#{id}
+    </select>
+    <delete id="deleteon" parameterType="Integer">
+        delete from mymessage where id=#{id}
+    </delete>
+
+    <!-- 修改某一条消息 -->
+    <update id="updatemessage" parameterType="com.example.demo.Model.Message">
+        update mymessage set messagetitle=#{messagetitle},messagedetail=#{messagedetail},date=#{date} where id=#{id}
+    </update>
+    <!--根据用户手机号查询他的文章-->
+    <select id="findMessageByPhone" parameterType="String" resultMap="getMessageMapper">
+        select * from mymessage where phone=#{phone}
+    </select>
+    <!--新增文章-->
+    <insert id="addMessage" parameterType="com.example.demo.Model.Message">
+        insert into mymessage (phone,messagetitle,messagedetail,date ) values(#{phone},#{messagetitle},#{messagedetail},#{date})
+    </insert>
+    <!--修改文章最后评论时间-->
+    <update id="updateReply">
+        update mymessage set lastcomment=#{date} where id=#{id}
+    </update>
+
+</mapper>

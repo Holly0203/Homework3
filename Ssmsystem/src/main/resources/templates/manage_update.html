@@ -1,0 +1,75 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>消息详情</title>
+    <link rel="stylesheet"
+          href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body onload="gettypes()">
+<div class="header">
+    <nav class="navbar navbar-default navbar-static-top"> <img
+            th:src="@{/picture/logo.png}" >
+        <ul>
+            <li><a th:href="@{/managecontroller/queryuser/}">放弃修改</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="content">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form>
+                <input type="hidden" id="userid" th:value="${userdetail.id}" />
+                <lable>角色名：</lable>
+                <input type="text" id="name"
+                       th:value="${userdetail.name}" /> <br> <br> <br>
+                <lable>用户权限：</lable>
+
+                <select id="select">
+                    <option value ="1">普通用户</option>
+                    <option value ="2">管理用户</option>
+                </select>
+                <br> <br>
+            </form>
+            <div class="btndiv">
+                <button id="save" class="btn btn-success btn-sm">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+function gettypes() {
+}
+
+
+
+    $(function() {
+        $("#save").click(function() {
+            var sel = document.getElementById("select");
+            var types = sel.options[sel.selectedIndex].value;
+            var userid = $("#userid").val();
+            var type = types;
+            var name = $("#name").val();
+            var url='/managecontroller/update';
+            $.ajax({
+                url : url,
+                type : 'get',
+                dataType : "json",
+                data : {
+                    "type" : type,
+                    "name" : name,
+                    "id" : userid,
+                },
+                success : function(data){
+                    if(data===0){
+                        location.href="/managecontroller/queryuser"
+                    }
+                }
+            })
+        })
+    })
+</script>
+</html>

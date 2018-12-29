@@ -1,0 +1,54 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员文章列表</title>
+    <link th:href="@{/css/message.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="header">
+    <nav class="navbar navbar-default navbar-static-top"> <img
+            th:src="@{/picture/logo.png}">
+    </nav>
+</div>
+<div class="manageass">
+    <li><a th:href="@{/managecontroller/queryuser/}">权限管理</a></li>
+
+
+</div>
+<div class="content">
+    <table class="table table-striped ">
+        <tr class="label-success">
+            <th style="width: 5%">序号</th>
+            <th style="width: 15%">我的文章标题</th>
+            <th style="width: 10%">作者</th>
+            <th style="width: 15%">日期</th>
+            <th style="width: 10%">评论数</th>
+            <th style="width: 10%">最后评论时间</th>
+            <th style="width: 10%">操作</th>
+        </tr>
+            <tr th:each="ml,mlstat:${messagelist}" >
+
+                <td th:text="${mlstat.count}"></td>
+                <td th:text="${ml.messagetitle}"><a th:href="@{messagecontroller/see/(messageid=${ml.id})}"></a></td>
+                <td th:text="${userService.findNameByPhone(ml.phone)}"></td>>
+                <td th:text="${ml.date}"></td>
+                <td th:text="${replyService.findCountById(ml.id)}"></td>
+               <td th:text="${ml.lastcomment}"></td>
+                <td><a th:href="@{/messagecontroller/deleteone(messageid=${ml.id})}"
+                       class="btn btn-danger btn-sm" role="button">删除</a> <a
+                        th:href="@{/messagecontroller/see/(messageid=${ml.id})}"
+                        class="btn btn-success btn-sm" role="button">查看</a> <a
+                           th:href="@{/messagecontroller/preupdate/(messageid=${ml.id})}"
+                            class="btn btn-success btn-sm" role="button">编辑</a><a
+                        th:href="@{/messagecontroller/preAddMessage}"
+                        class="btn btn-success btn-sm" role="button">新增</a></td>
+                </td>
+
+            </tr>
+
+    </table>
+</div>
+</body>
+
+</html>

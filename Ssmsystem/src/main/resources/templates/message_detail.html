@@ -1,0 +1,87 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>消息详情</title>
+    <link th:href="@{/css/message.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet"
+          href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="header">
+    <nav class="navbar navbar-default navbar-static-top">
+        <img th:src="@{/picture/logo.png}">
+        <ul>
+            <li><a th:href="@{/messagecontroller/judge}">返回列表</a></li>
+
+        </ul>
+    </nav>
+
+</div>
+<div class="content">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="messagetitle" th:text="${messagedetail.messagetitle}"></div>
+            <div class="messagedate" th:text="${messagedetail.date}"></div>
+            <div class="messagecontent" th:text="${messagedetail.messagedetail}"></div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <table>
+        <tr th:each="rl,rlstat:${replydetail}" >
+            <td th:text="${rlstat.count}"></td>
+            <td>楼：</td>
+            <td th:text="${userService.findNameByPhone(rl.replyid)}"></td>
+            <td>：</td>
+            <td th:text="${rl.replydetail}"></td>
+            <td th:text="${rl.replydate}"></td>
+        </tr>
+    </table>
+</div>
+
+<form>
+    <input type="hidden" id="messageid" th:value="${messagedetail.id}" />
+    <label style="vertical-align: top">评论</label>
+    <textarea cols="100" rows="10" id="replydetail"></textarea>
+</form>
+
+        <button id="savereply">提交评论</button>
+
+
+
+
+
+</body>
+<script th:src="@{http://code.jquery.com/jquery-latest.js}" ></script>
+<script>
+        $("#savereply").click(function() {
+            alert("评论成功！");
+            var messageid = $("#messageid").val();
+            var replydetail = $("#replydetail").val();
+            var replyid=10000000;
+            var url='/replycontroller/addReply';
+            $.ajax({
+
+                url : url,
+                type : 'post',
+                dataType : "json",
+                data : {
+                    "messageid" : messageid,
+                    "replydetail" : replydetail,
+                    "replyid" : replyid
+                },
+                success : function(data){
+                    if(data===0){
+                        console.log(data)
+                        location.href="/messagecontroller/judge"
+                    }
+                }
+            });
+        })
+
+
+</script>
+</html>

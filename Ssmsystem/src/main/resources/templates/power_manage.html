@@ -1,0 +1,40 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>权限管理</title>
+    <link th:href="@{/css/message.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="header">
+    <nav class="navbar navbar-default navbar-static-top"> <img
+            th:src="@{/picture/logo.png}">
+    </nav>
+</div>
+<div class="manage">
+    <li><a th:href="@{/messagecontroller/querymessage/}">退出权限管理</a></li>
+
+
+</div>
+<div class="content">
+    <table  id="mytable" class="table table-striped ">
+        <tr class="label-success">
+            <th style="width: 5%">序号</th>
+            <th style="width: 25%">用户名</th>
+            <th style="width: 15%">删除</th>
+            <th style="width: 10%">增加</th>
+            <th style="width: 10%">修改</th>
+
+        </tr>
+        <tr>
+
+            <td ><input   type="checkbox"   value="1"    name="名称"   checked="checked"/></td>
+            <td><input   type="checkbox"   value="0"    name="名称"   checked="checked"/></td>
+            <td><input   type="checkbox"   value="1"    name="名称"   checked="checked"/></td>
+            <td>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
